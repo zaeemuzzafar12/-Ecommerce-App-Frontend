@@ -1,0 +1,1 @@
+export const BaseUrl = `https://ecommback32.herokuapp.com/api`
