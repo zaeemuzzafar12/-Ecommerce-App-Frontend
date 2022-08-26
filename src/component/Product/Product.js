@@ -68,8 +68,7 @@ import {
   
   const Product = ({ filterproduct , popularProducts  }) => {
     const BaseUrl = `http://localhost:5000`
-    console.log("item" ,filterproduct ,"data" ,popularProducts)
-
+    
     return (
       
         filterproduct.length > 0  ?
