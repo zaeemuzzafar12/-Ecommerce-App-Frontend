@@ -21,6 +21,7 @@ const Products = ({filterproduct}) => {
     FetchProductData()
   },[])
 
+  console.log(filterproduct , popularProducts)
 
   return (
     <Container>

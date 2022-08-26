@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
 import { GetApi } from '../../Api/function'
+import img1 from '../../images/all.jpg'
 
 const Container = styled.div`
   flex: 1;
@@ -44,6 +45,9 @@ const Button = styled.button`
 `;
 
 const CategoryItem = ({ item ,Setfilterproduct }) => {
+
+  const [All , SetAll] = useState([]);
+
   const BaseUrl = `http://localhost:5000`
 
   const  FilterProductByCategories = async (e,item) => {
@@ -54,15 +58,21 @@ const CategoryItem = ({ item ,Setfilterproduct }) => {
     Setfilterproduct(cat)
   }
 
+ 
 
   return (
-    <Container>
-      <Image src={`${BaseUrl}/${item.image}`} />
-      <Info>
-        <Title>{item.name}</Title>
-        <Button onClick={(e) => FilterProductByCategories(e,item)}>SHOP NOW</Button>
-      </Info>
-    </Container>
+          <>
+            <Container>
+            <Image src={`${BaseUrl}/${item.image}`} />
+            <Info>
+              <Title>{item.name}</Title>
+              <Button onClick={(e) => FilterProductByCategories(e,item)}>SHOP NOW</Button>
+            </Info>
+          </Container>
+          </>
+  
+    
+     
   );
 };
 

@@ -71,8 +71,8 @@ import {
     
     return (
       
-        filterproduct.length > 0  ?
-        filterproduct.map((data) => {
+        filterproduct?.length > 0  ?
+        filterproduct?.map((data) => {
           return(
            <Container>
               <Circle />
@@ -92,7 +92,7 @@ import {
           )
         }) 
         : 
-        popularProducts.map((item) => {
+        popularProducts?.map((item) => {
           return(
           <Container>
             <Circle />
