@@ -4,6 +4,7 @@ import {
     ShoppingCartOutlined,
   } from "@material-ui/icons";
   import styled from "styled-components";
+  import React,{useEffect} from 'react';
   
   const Info = styled.div`
     opacity: 0;
@@ -65,25 +66,54 @@ import {
     }
   `;
   
-  const Product = ({ item }) => {
-  
+  const Product = ({ filterproduct , popularProducts  }) => {
     const BaseUrl = `http://localhost:5000`
+    console.log("item" ,filterproduct ,"data" ,popularProducts)
+
     return (
-      <Container>
-        <Circle />
-        <Image src={`${BaseUrl}/${item?.image}`} />
-        <Info>
-          <Icon>
-            <ShoppingCartOutlined />
-          </Icon>
-          <Icon>
-            <SearchOutlined />
-          </Icon>
-          <Icon>
-            <FavoriteBorderOutlined />
-          </Icon>
-        </Info>
-      </Container>
+      
+        filterproduct.length > 0  ?
+        filterproduct.map((data) => {
+          return(
+           <Container>
+              <Circle />
+              <Image src={`${BaseUrl}${data?.image}`} key={data?._id} />
+              <Info>
+                <Icon>
+                  <ShoppingCartOutlined />
+                </Icon>
+                <Icon>
+                  <SearchOutlined />
+                </Icon>
+                <Icon>
+                  <FavoriteBorderOutlined />
+                </Icon>
+              </Info>
+            </Container>
+          )
+        }) 
+        : 
+        popularProducts.map((item) => {
+          return(
+          <Container>
+            <Circle />
+            <Image src={`${BaseUrl}${item?.image}`} key={item?._id} />
+            <Info>
+              <Icon>
+                <ShoppingCartOutlined />
+              </Icon>
+              <Icon>
+                <SearchOutlined />
+              </Icon>
+              <Icon>
+                <FavoriteBorderOutlined />
+              </Icon>
+            </Info>
+          </Container>
+          )
+        })
+      
+
     );
   };
   

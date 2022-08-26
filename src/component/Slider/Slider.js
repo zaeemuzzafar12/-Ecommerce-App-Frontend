@@ -1,7 +1,6 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
 import { useState , useEffect } from "react";
 import styled from "styled-components";
-import { sliderItems } from "../../data";
 import { mobile } from "../../responsive";
 import { GetApi } from '../../Api/function'
 const Container = styled.div`
@@ -82,7 +81,7 @@ const Button = styled.button`
 const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [slider, Setslider] = useState([]);
-  const BaseUrl =  `http://localhost:5000`
+  const BaseUrl =  `http://localhost:5000` || `https://ecommback32.herokuapp.com`
   const handleDataApi = async () => {
     const data = await GetApi(`slider/getallslider`)
     Setslider(data?.data)

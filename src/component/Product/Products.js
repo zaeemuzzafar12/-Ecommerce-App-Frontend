@@ -10,9 +10,8 @@ const Container = styled.div`
     justify-content: space-between;
 `;
 
-const Products = () => {
+const Products = ({filterproduct}) => {
   const [popularProducts , SetpopularProducts] = useState([]);
-
   const FetchProductData = async () => {
     const data = await GetApi('product/getallproducts');
     SetpopularProducts(data?.data)
@@ -25,9 +24,7 @@ const Products = () => {
 
   return (
     <Container>
-      {popularProducts.map((item) => (
-        <Product item={item} key={item._id} />
-      ))}
+       <Product filterproduct={filterproduct} popularProducts={popularProducts} />
     </Container>
   );
 };

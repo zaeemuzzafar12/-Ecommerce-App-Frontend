@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
+import { GetApi } from '../../Api/function'
 
 const Container = styled.div`
   flex: 1;
@@ -28,7 +30,7 @@ const Info = styled.div`
 `;
 
 const Title = styled.h1`
-    color:white;
+    color:black;
     margin-bottom: 20px;
 `;
 
@@ -41,14 +43,24 @@ const Button = styled.button`
     font-weight: 600;
 `;
 
-const CategoryItem = ({ item }) => {
+const CategoryItem = ({ item ,Setfilterproduct }) => {
   const BaseUrl = `http://localhost:5000`
+
+  const  FilterProductByCategories = async (e,item) => {
+    e.preventDefault();
+    const data = await GetApi('product/getallproducts')
+    const combine = data?.data
+    const cat = combine.filter((datas) => datas.categories._id === item._id)
+    Setfilterproduct(cat)
+  }
+
+
   return (
     <Container>
       <Image src={`${BaseUrl}/${item.image}`} />
       <Info>
         <Title>{item.name}</Title>
-        <Button>SHOP NOW</Button>
+        <Button onClick={(e) => FilterProductByCategories(e,item)}>SHOP NOW</Button>
       </Info>
     </Container>
   );
