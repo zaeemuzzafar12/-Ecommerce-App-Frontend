@@ -1,14 +1,24 @@
 
 import './App.css';
+import Categories from './component/Category/Category';
+import Footer from './component/Footer/Footer';
 
-import Checkout from './component/Checkout';
+import Header from './component/Header/Header';
+import Newsletter from './component/NewsLetter/NewsLetter';
+import Products from './component/Product/Products';
+import Slider from './component/Slider/Slider';
 
 
 function App() {
 
   return (
     <div className="App">
-      <Checkout />
+      <Header />
+      <Slider />
+      <Categories />
+      <Products />
+      <Newsletter />
+      <Footer />
     </div>
   );
 }
