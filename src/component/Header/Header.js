@@ -1,8 +1,19 @@
 import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from "@material-ui/icons";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
+import { GetApi } from "../../Api/function";
+import { BaseUrl } from "../../Api/BaseUrl";
+import {
+  List,
+  ListItem,
+  Divider,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+  Typography,
+} from "@mui/material";
 
 const Container = styled.div`
   height: 60px;
@@ -68,15 +79,90 @@ const MenuItem = styled.div`
 `;
 
 const Header = () => {
+  const [searchproduct, Setsearchproduct] = useState([]);
+  const [card, Setcard] = useState([]);
+  const BaseUrl = `http://localhost:5000`
+
+  const SearchByKeyword = async (e) => {
+    e.preventDefault();
+    const searchproducts = await GetApi(`product/search/${searchproduct}`);
+    const items = searchproducts?.data?.filter((data) =>
+      data.title
+        .toLowerCase()
+        .startsWith(
+          searchproduct
+            ? searchproduct.toLowerCase()
+            : searchproduct.toUpperCase()
+        )
+    );
+    Setcard(items);
+  };
+
   return (
     <Container>
       <Wrapper>
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input placeholder="Search" />
-            <Search style={{ color: "gray", fontSize: 16 }} />
+            <Input
+              type="text"
+              onChange={(e) => Setsearchproduct(e.target.value)}
+              placeholder="Search"
+              value={searchproduct}
+            />
+            <Search
+              onClick={(e) => SearchByKeyword(e, searchproduct)}
+              style={{ color: "gray", fontSize: 16 }}
+            />
           </SearchContainer>
+          {console.log(card)}
+
+          <List
+            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          >{
+            card.length ? 
+            card.map((data) => {
+              return(
+                <>
+                <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  {console.log(`${BaseUrl}${data?.image}`)}
+                  <Avatar alt="Remy Sharp" src={`${BaseUrl}${data?.image}`} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary= {data.title}
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                       { data?.price}
+                      </Typography>
+                      
+                    </React.Fragment>
+                  }
+                />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+                </>
+              )
+            }) : (
+              <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        No Data Found
+                      </Typography>
+            )
+           
+
+          }
+          </List>
         </Left>
         <Center>
           <Logo>TECHNADO.</Logo>
