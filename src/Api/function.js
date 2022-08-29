@@ -26,7 +26,7 @@ export const PostApi = async (link,payload) => {
         const options = {
             method:"POST",
             headers:{
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/json"
             },
             body: JSON.stringify(payload)
         }

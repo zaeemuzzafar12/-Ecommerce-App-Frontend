@@ -1,6 +1,9 @@
 import { Send } from "@material-ui/icons";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
+import React,{ useState } from 'react'
+import { toast } from 'react-toastify'
+import { BaseUrl } from "../../Api/BaseUrl";
 
 const Container = styled.div`
   height: 60vh;
@@ -46,14 +49,45 @@ const Button = styled.button`
 `;
 
 const Newsletter = () => {
+  const [ emailTo , SetemailTo ] = useState([]);
+
+  const EmailPosted = async (e) => {
+    e.preventDefault();
+    
+    const data = {
+      emailTo: emailTo
+    }
+    const url = `${BaseUrl}/newsletter/subscribed`
+    const options = {
+      method:"POST",
+      headers:{
+          "Content-type": "application/json"
+      },
+      body: JSON.stringify(data)
+  }
+  const datas = await fetch(url,options);
+  const res = await datas.json()
+  if(res?.status === 200){
+    toast.success(res?.message)
+  }
+    
+    
+  }
+
+ 
   return (
     <Container>
       <Title>Newsletter</Title>
       <Desc>Get timely updates from your favorite products.</Desc>
       <InputContainer>
-        <Input placeholder="Your email" />
+        <Input 
+          type="text"
+          onChange={(e) =>  SetemailTo(e.target.value)}
+          placeholder="Your email"
+          value={emailTo}
+           />
         <Button>
-          <Send />
+          <Send  onClick={(e) => EmailPosted(e) }/>
         </Button>
       </InputContainer>
     </Container>

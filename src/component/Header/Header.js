@@ -30,7 +30,7 @@ const Wrapper = styled.div`
 `;
 
 const Left = styled.div`
-  flex: 1;
+  flex: 2;
   display: flex;
   align-items: center;
 `;
@@ -42,7 +42,7 @@ const Language = styled.span`
 `;
 
 const SearchContainer = styled.div`
-  border: 0.5px solid lightgray;
+  border: 0.5px solid black;
   display: flex;
   align-items: center;
   margin-left: 25px;
@@ -85,17 +85,10 @@ const Header = () => {
 
   const SearchByKeyword = async (e) => {
     e.preventDefault();
-    const searchproducts = await GetApi(`product/search/${searchproduct}`);
-    const items = searchproducts?.data?.filter((data) =>
-      data.title
-        .toLowerCase()
-        .startsWith(
-          searchproduct
-            ? searchproduct.toLowerCase()
-            : searchproduct.toUpperCase()
-        )
-    );
-    Setcard(items);
+    var searchproducts = await GetApi(`product/search/${searchproduct}`);
+    var updatedlist = [...searchproducts?.data];
+    updatedlist = updatedlist?.filter((data) => data.title.toLowerCase().indexOf( searchproduct.toLowerCase()) !== -1);
+    Setcard(updatedlist);
   };
 
   return (
@@ -124,7 +117,7 @@ const Header = () => {
             card.map((data) => {
               return(
                 <>
-                <ListItem alignItems="flex-start">
+                <ListItem alignItems="flex-start" key={data?._id} >
                 <ListItemAvatar>
                   {console.log(`${BaseUrl}${data?.image}`)}
                   <Avatar alt="Remy Sharp" src={`${BaseUrl}${data?.image}`} />
