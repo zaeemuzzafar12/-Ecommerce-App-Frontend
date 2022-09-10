@@ -3,6 +3,7 @@ import { useState , useEffect } from "react";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
 import { GetApi } from '../../Api/function'
+import img1 from '../../images/all.jpg'
 const Container = styled.div`
   width: 100%;
   height: 100vh;
@@ -83,17 +84,22 @@ const Slider = () => {
   const [slider, Setslider] = useState([]);
   const BaseUrl =  `http://localhost:5000` || `https://ecommback32.herokuapp.com`
   const handleDataApi = async () => {
-    const data = await GetApi(`slider/getallslider`)
-    Setslider(data?.data)
+    try{
+      const data = await GetApi(`slider/displayslider`)
+      Setslider(data?.data)
+    }
+    catch(err){
+      <img src={img1} />
+    }
   }
 
-  
+  console.log(slideIndex)
 
   const handleClick = (direction) => {
     if (direction === "left") {
-      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
+      setSlideIndex(slider > slider?.length ? slider - 1 : slider?.length);
     } else {
-      setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
+      setSlideIndex(slider < slider?.length - 1 ? slider + 1 : 0);
     }
   };
 
